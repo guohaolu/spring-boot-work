@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stealandfire.dao.IEmployeeNumberDao">
+    <!--实体映射-->
+    <resultMap id="BaseResultMap" type="com.stealandfire.pojo.entity.EmployeeNumberEntity">
+        <id property="personId" column="person_id"/>
+        <result property="employeeName" column="employee_name"/>
+        <result property="employeeLatestNumber" column="employee_latest_number"/>
+        <result property="employeeLastNumber" column="employee_last_number"/>
+    </resultMap>
+
+    <sql id="selectAllFields">
+        SELECT person_id, employee_name, employee_latest_number, employee_last_number
+        FROM EMPLOYEE_NUMBER
+    </sql>
+
+    <sql id="allFields">
+        person_id, employee_name, employee_latest_number, employee_last_number
+    </sql>
+
+    <sql id="allFieldsNoPrimaryKey">
+        employee_name, employee_latest_number, employee_last_number
+    </sql>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="personId" keyColumn="person_id">
+        INSERT INTO EMPLOYEE_NUMBER (<include refid="allFieldsNoPrimaryKey"/>)
+        VALUES (#{employeeName}, #{employeeLatestNumber}, #{employeeLastNumber})
+    </insert>
+
+    <select id="listPersonIdByEmployeeLatestNumber" resultType="java.lang.Long">
+        select person_id
+        from EMPLOYEE_NUMBER
+        where employee_latest_number in (
+        <foreach collection="employeeNumberList" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </select>
+</mapper>

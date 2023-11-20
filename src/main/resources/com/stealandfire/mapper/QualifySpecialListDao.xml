@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stealandfire.dao.IQualifySpecialListDao">
+    <!--实体映射-->
+    <resultMap id="BaseResultMap" type="com.stealandfire.pojo.entity.QualifySpecialListEntity">
+        <id property="specialListId" column="special_list_id"/>
+        <result property="batchCode" column="batch_code"/>
+        <result property="personId" column="person_id"/>
+        <result property="employeeName" column="employee_name"/>
+        <result property="qualification" column="is_qualification"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="creationDate" column="creation_date"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <sql id="selectAllFields">
+        SELECT special_list_id, batch_code, person_id, employee_name, is_qualification,
+            created_by, creation_date, updated_by, update_date
+        FROM QUALIFY_SPECIAL_LIST
+    </sql>
+
+    <sql id="allFields">
+        special_list_id, batch_code, person_id, employee_name, is_qualification, created_by, creation_date, updated_by, update_date
+    </sql>
+
+    <sql id="allFieldsNoPrimaryKey">
+        batch_code, person_id, employee_name, is_qualification, created_by, creation_date, updated_by, update_date
+    </sql>
+
+    <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="specialListId" keyColumn="special_list_id">
+        INSERT INTO QUALIFY_SPECIAL_LIST (batch_code, person_id, employee_name, is_qualification) VALUES
+        <foreach collection="entityList" item="item" separator=",">
+            (#{item.batchCode}, #{item.personId}, #{item.employeeName}, #{item.qualification})
+        </foreach>
+        on DUPLICATE KEY UPDATE is_qualification=values(is_qualification)
+    </insert>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="specialListId" keyColumn="special_list_id">
+        INSERT INTO QUALIFY_SPECIAL_LIST (<include refid="allFieldsNoPrimaryKey"/>)
+        VALUES (#{batchCode}, #{personId}, #{employeeName}, #{qualification}, #{createdBy}, #{creationDate}, #{updatedBy}, #{updateDate})
+    </insert>
+</mapper>

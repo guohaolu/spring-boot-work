@@ -1,0 +1,37 @@
+server:
+  # 端口
+  port: 60010
+
+spring:
+  # 环境
+  profiles:
+    active: dev
+  # 数据库连接
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/workflow?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+    username: root
+    password: lgh@LGH123
+  # redis连接
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: lgh@LGH123
+    database: 0
+  # activiti工作流配置
+  activiti:
+    # 是否检查流程定义
+    check-process-definitions: true
+    # 数据库更新模式
+    database-schema-update: true
+    # 历史记录级别
+    history-level: full
+    # 是否使用数据库历史记录
+    db-history-used: true
+    # 部署方式
+    deployment-mode: never-fail
+
+# mybatis
+mybatis:
+  # 映射文件路径
+  mapper-locations: classpath:com/stealandfire/mapper/*.xml
