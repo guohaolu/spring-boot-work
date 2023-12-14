@@ -15,4 +15,9 @@ public class IUserServiceTest {
     public void testFun2() {
         userService.fun2();
     }
+
+    @Test
+    public void testTransaction() {
+        userService.transaction();
+    }
 }

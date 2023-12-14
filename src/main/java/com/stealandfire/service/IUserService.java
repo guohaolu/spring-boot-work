@@ -12,4 +12,9 @@ public interface IUserService {
      * @return 对应的值
      */
     String getCachableString(String key);
+
+    /**
+     * 测试事务
+     */
+    void transaction();
 }
